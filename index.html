@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">  
+    <title>QR CODE GENERATOR</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <body>
+    <!--para sa buong box kasama na ung text -->
+    <div class="wrapper">
+      <header>
+        <h1>QR Code Generator</h1>
+      </header>
+      <!--para sa loob ng box lalabas ung generator-->
+      <div class="form">
+        <input type="text" placeholder="Enter text or url"> 
+        <button>QR GENERATOR</button> 
+      </div>
+      <!--para sa image ng qr, lumabas-->
+      <div class="qr-code">
+        <img src="" alt="qr code">
+      </div>
+    </div>
+    <style>
+
+  /* para ma center ung box sa gitna*/
+*{ 
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+/* para sa gumitna ung box */
+body{
+  display: flex;
+  min-height: 100hc;
+  align-items: center;
+  background: rgb(24, 34, 43);
+  justify-content: center;
+  padding-top: 50px;
+}
+
+/*para den sa loob ng box*/
+.wrapper{
+  height: 265px;
+  max-width: 410px;
+  background: #fff;
+  border-radius: 7px;
+  padding: 30px 25px 0;
+  transition: transform 0.5s ease;
+}
+/*border ng qr */
+.wrapper.active{
+  height: 530px;
+}
+/* para ma adjust ung text sa loob ng border*/
+header h1{
+  font-size: 21px;
+  font-weight: 500;
+}
+/*para maayos ung align sa loob ng border*/
+.form :where(input, button) {
+  width: 100%;
+  height: 55px;
+  border: none;
+  outline: none;
+}
+/*border para sa text*/
+.form input{
+  font-size: 18px;
+  padding: 0 17px;
+  border: 1px solid #999;
+}
+/*para sa magkaron ng kulay ung qr generator*/
+.form input::placeholder{
+  color:rgb(74, 72, 72);
+  transition: transform 0.5s ease;
+  transform: translateY(-5%) scale(1.1);
+  padding-left: 4%;
+}
+/*parehas sila ng placeholder*/
+.form button{
+  color: #9a9a9a;
+  cursor: pointer;
+  margin-top: 20px;
+  font-size: 17px;
+  background: #000000;
+}
+
+/* para ma align ung qr pag ni generate na*/
+.qr-code{
+  opacity: 0;
+  display: flex;
+  padding: 33px 0;
+  border-radius: 5px;
+  align-items: center;
+  pointer-events: none;
+  justify-content: center;
+  border: 1px solid #ccc;
+}
+/*pag ni generate lalabas ung qr*/
+.wrapper.active .qr-code{
+  opacity: 1;
+  pointer-events: auto;
+  transition: opacity 0.5s 0.05s ease;
+}
+    </style>
+    <script>
+      // para maactive lahat yan
+const wrapper = document.querySelector(".wrapper"),
+qrInput = wrapper.querySelector(".form input"),
+generateBtn = wrapper.querySelector(".form button"),
+qrImg = wrapper.querySelector(".qr-code img");
+let preValue;
+
+generateBtn.addEventListener("click", () => { // para gumana lahat yan 
+    let qrValue = qrInput.value.trim(); // para pag nag generate lumabas ung qr
+    generateBtn.innerText = "Wait"; // para mapalitan ng wait pag pinindot
+    qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${qrValue}`;// ung link hiningi ko kay chatgpt
+    qrImg.addEventListener("load", () => { // para mag load pag nag generate
+        wrapper.classList.add("active"); // para mag activate ung qr
+        generateBtn.innerText = "Done"; //pag pinindot ko ung generate lumabas ung done
+    });
+});
+
+    </script>
+  </body>
+</html>
